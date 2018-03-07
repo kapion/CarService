@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <div th:replace="fragments/header :: header"/>
+    <style>
+        ul.car-info > li {
+            display: inline;	/* Располагаем элементы по горизонтали */
+            list-style: none;	/* Убираем маркеры списка */
+            padding: 5px;		/* Поля вокруг текста */
+            border: solid 1px #000000;
+            background-color: #fffff0;
+        }
+        .to-one-line {display: inline-block; }
+    </style>
+    <title>Заглавная страница сервиса</title>
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu "/>
+
+<br/>
+<div class="container-fluid text-center">
+    <div class="row content">
+       <div class="col-sm-8 text-left">
+           <a href="/cars/addCar" class="btn btn-info btn-sm">
+               <span class="glyphicon glyphicon-plus"></span> Добавить
+           </a>
+
+
+            <div th:each="car : ${cars}">
+
+                    <a  th:href="@{/cars/car/{id}(id=${car.id})}"><h3 class="ctrl" th:text="${car.carModel}"/></a>
+
+
+                <!--a th:href="@{/cars/del/{id}(id=${car.id})}"><span>Delete</span></a-->
+                <ul class="car-info">
+                    <li th:text="${car.year}"/>
+                    <li th:text="${car.getEngineTypeName()}"/>
+                </ul>
+                <p th:text="${car.content}"/>
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

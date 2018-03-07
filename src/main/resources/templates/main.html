@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <div th:replace="fragments/header :: header"/>
+    <style>
+        ul.car-info > li {
+            display: inline;	/* Располагаем элементы по горизонтали */
+            list-style: none;	/* Убираем маркеры списка */
+            padding: 5px;		/* Поля вокруг текста */
+            border: solid 1px #000000;
+            background-color: #fffff0;
+        }
+        .ctrl {display: inline-block; }
+    </style>
+    <title>Заглавная страница сервиса</title>
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu "/>
+
+<br/>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-8 text-left">
+            <div>
+                <div class="well">
+                    <div class="panel-body">
+                        <h1>Добро пожаловать</h1>
+                        <p>
+                            Этот сайт является демо версией возможностей <b>framework'а Spring</b><br/>
+                            <a href="http://localhost:8082/">Администрирование БД H2</a>
+                        </p>
+
+                        <p>Всего автомобилей в базе: <span th:text="${countCars}"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+
+<body>
+<nav class="navbar navbar-inverse" th:fragment="topmenu">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+                <li><a href="/cars">Автомобили</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/cars/login"><span class="glyphicon glyphicon-log-in"></span> Авторизация</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
