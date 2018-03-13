@@ -22,4 +22,10 @@ public class MainController {
         model.addAttribute("countCars", service.getCountCars());
         return "main";
     }
+
+
+    @RequestMapping(value = "/login")
+    public String loginPage() {
+        return "login";
+    }
 }

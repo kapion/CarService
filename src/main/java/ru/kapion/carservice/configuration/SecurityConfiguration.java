@@ -20,9 +20,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cars/car/*").hasRole("EDITOR")
                 .antMatchers("/cars/del/*").hasRole("EDITOR")
                 .and()
-                .formLogin().loginPage("/cars/login").defaultSuccessUrl("/cars/editor").permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/cars/editor").permitAll()
                 .and()
-                .logout().logoutUrl("/cars/logout").permitAll();
+                .logout().logoutUrl("/logout").permitAll();
     }
 
     @Autowired

@@ -37,12 +37,13 @@
                          </option>
                     </select>
 
+
+
                 </div>
                 <div class="form-group">
                     <label for="comment">Комментарий</label>
                     <textarea class="form-control" rows="5" id="comment" th:field="*{content}"></textarea>
                 </div>
-
                 <button type="submit" class="btn btn-success"  th:field="*{id}">Сохранить</button>
             </form>
             <form class="to-one-line" th:action="@{/cars/del/{id}(id=${car.id})}" method="post">
@@ -52,7 +53,17 @@
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </form>
+            <form class="to-one-line" th:action="@{/repairs/enroll/{id}(id=${car.id})}" method="post">
+                <!--Enroll repair-->
+                <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
+                <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-wrench"></span> Записать на ремонт
+                </button>
+            </form>
             <hr/>
+            <div th:each="repair : ${repairs}">
+                <a  th:href="@{/repairs/repair/{id}(id=${repair.id})}"><h3 th:text="${repair.service}"/></a>
+            </div>
         </div>
     </div>
 </div>

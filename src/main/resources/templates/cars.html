@@ -13,7 +13,7 @@
         }
         .to-one-line {display: inline-block; }
     </style>
-    <title>Заглавная страница сервиса</title>
+    <title>Автомобили</title>
 </head>
 <body>
 
@@ -30,9 +30,15 @@
 
             <div th:each="car : ${cars}">
 
-                    <a  th:href="@{/cars/car/{id}(id=${car.id})}"><h3 class="ctrl" th:text="${car.carModel}"/></a>
+                    <a class="to-one-line" th:href="@{/cars/car/{id}(id=${car.id})}"><h3  th:text="${car.carModel}"/></a>
 
-
+                <form class="to-one-line" th:action="@{/repairs/enroll/{id}(id=${car.id})}" method="post">
+                    <!--Enroll repair-->
+                    <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                    </button>
+                </form>
                 <!--a th:href="@{/cars/del/{id}(id=${car.id})}"><span>Delete</span></a-->
                 <ul class="car-info">
                     <li th:text="${car.year}"/>

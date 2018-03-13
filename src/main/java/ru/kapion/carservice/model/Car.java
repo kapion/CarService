@@ -6,8 +6,7 @@ import ru.kapion.carservice.utils.DicHelper;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @Setter
@@ -18,6 +17,7 @@ public class Car implements Serializable, Comparable<Car> {
     @Id
     @GeneratedValue
     private Integer id;
+
     @Column
     private String carModel;
     @Column
@@ -44,5 +44,11 @@ public class Car implements Serializable, Comparable<Car> {
     public String getEngineTypeName() {
          return DicHelper.getEngineTypes().get(engineType);
     }
+
+    @OneToMany(mappedBy = "carId",  cascade = CascadeType.ALL, orphanRemoval = true)
+  //  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Repair> repairs = new ArrayList<>();
+
+
 
 }

@@ -36,17 +36,12 @@ public class CarsController {
         return "redirect:../";
     }
 
-
-    @RequestMapping(value = "/login")
-    public String loginPage() {
-        return "login";
-    }
-
     @GetMapping(value = "/car/{id}")
     public String editCar(@PathVariable Integer id, Model model) {
         model.addAttribute("car", service.getById(id));
         model.addAttribute("engineTypes", DicHelper.getEngineTypes());
         model.addAttribute("title", "Изменение данных автомобиля");
+        model.addAttribute("repairs", service.getRepairs(id));
         return "car";
     }
 
