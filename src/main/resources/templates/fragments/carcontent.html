@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+
+<body>
+<div class="form-group" th:fragment="carInfo">
+    <label for="usr">Название</label>
+    <input type="text" class="form-control" id="usr" required th:field="*{carModel}"/>
+    <label for="year">Год выпуска</label>
+    <input type="number" value="2000" th:min="1940"   th:max="2099" id="year" th:field="*{year}" list="defaultYears"/>
+    <!--    onkeyup="return clearSymbols(this);" onchange="return clearSymbols(this);" -->
+    <datalist id="defaultYears">
+        <option th:each="yearBO : ${yearBuildOut}"
+                th:value="${yearBO}"/>
+    </datalist>
+
+    <label for="engineType">Тип двигателя</label>
+    <!--textarea class="form-control" rows="1" id="engineType" th:field="*{engineType}"></textarea-->
+    <select id="engineType" th:field="*{engineType}">
+        <option th:each="engine : ${engineTypes.keySet()}"
+                th:value="${engine}"
+                th:utext="${engineTypes.get(engine)}">
+            Тип двигателя
+        </option>
+    </select>
+    <label for="comment">Комментарий</label>
+    <textarea class="form-control" rows="5" id="comment" th:field="*{content}"></textarea>
+</div>
+
+</body>
+</html>

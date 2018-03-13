@@ -13,7 +13,7 @@
         }
         .to-one-line {display: inline-block; }
     </style>
-    <title>Автомобили</title>
+    <title>Клиенты</title>
 </head>
 <body>
 
@@ -23,28 +23,19 @@
 <div class="container-fluid text-center">
     <div class="row content">
        <div class="col-sm-8 text-left">
-           <a href="/cars/addcar" class="btn btn-info btn-sm">
+           <a href="/clients/add" class="btn btn-info btn-sm">
                <span class="glyphicon glyphicon-plus"></span> Добавить
            </a>
 
 
-            <div th:each="car : ${cars}">
+            <div th:each="owner : ${owners}">
 
-                    <a class="to-one-line" th:href="@{/cars/car/{id}(id=${car.id})}"><h3  th:text="${car.carModel}"/></a>
+                <a class="to-one-line" th:href="@{/clients/owner/{id}(id=${owner.id})}"><h3  th:text="${owner.name}"/></a>
 
-                <form class="to-one-line" th:action="@{/repairs/enroll/{id}(id=${car.id})}" method="post">
-                    <!--Enroll repair-->
-                    <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
-                    <button type="submit" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-wrench"></span>
-                    </button>
-                </form>
-                <!--a th:href="@{/cars/del/{id}(id=${car.id})}"><span>Delete</span></a-->
                 <ul class="car-info">
-                    <li th:text="${car.year}"/>
-                    <li th:text="${car.getEngineTypeName()}"/>
+                    <li th:text="${owner.phone}"/>
+                    <li th:text="${owner.note}"/>
                 </ul>
-                <p th:text="${car.content}"/>
                 <hr/>
             </div>
         </div>

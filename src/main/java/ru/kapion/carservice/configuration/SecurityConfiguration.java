@@ -16,11 +16,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         config
                 .authorizeRequests()
                 .antMatchers("/cars").permitAll()
-                .antMatchers("/cars/addCar").hasRole("EDITOR")
+                .antMatchers("/repairs").permitAll()
+                .antMatchers("/cars/addcar").hasRole("EDITOR")
                 .antMatchers("/cars/car/*").hasRole("EDITOR")
                 .antMatchers("/cars/del/*").hasRole("EDITOR")
+                .antMatchers("/repairs/enroll/*").hasRole("EDITOR")
+                .antMatchers("/repairs/repair/*").hasRole("EDITOR")
+                .antMatchers("/repairs/del/*").hasRole("EDITOR")
+                .antMatchers("/h2-console").hasRole("EDITOR")
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/cars/editor").permitAll()
+                //.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutUrl("/logout").permitAll();
     }

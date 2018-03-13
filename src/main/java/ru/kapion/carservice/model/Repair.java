@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,12 +18,12 @@ import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optio
 @Entity
 public class Repair implements Serializable, Comparable<Repair> {
 
+    public Repair() {
+    }
+
     @Id
     @GeneratedValue
     private Integer id;
-
-    @Column
-    private Integer carId;
 
     @Column
     private String service;
@@ -39,25 +40,18 @@ public class Repair implements Serializable, Comparable<Repair> {
     @Lob
     private String description;
 
+    @Column
+    private BigDecimal cost;
 
-
-    private Car currentCar;
-
-    public Car getCurrentCar() {
-        return currentCar;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "car_id",
-            foreignKey = @ForeignKey(name = "CAR_ID_FK")
-    )
-    public void setCurrentCar(Car currentCar) {
-        this.currentCar = currentCar;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    //указываем carId только для того, чтобы поле в БД REPAIR.car_id стало @NotNull
+    @JoinColumn(name = "carId", nullable = false)
+    private Car car;
 
     @Override
     public int compareTo(Repair that) {
-        return Integer.compare(this.carId, that.carId);
+       // return Integer.compare(car.carId, that.carId);
+        return date.compareTo(that.getDate());
     }
 
 

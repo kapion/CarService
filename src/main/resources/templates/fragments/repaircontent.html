@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+
+<body>
+<div class="form-group" th:fragment="repairInfo">
+
+        <input class="form-control" type="hidden" th:field="*{car.id}" />
+        <a  th:href="@{/cars/car/{id}(id=*{car.id})}"><h3  th:text="*{car.carModel}"/></a>
+
+        <label for="service">Вид работ</label>
+        <input type="text" class="form-control" id="service" required th:field="*{service}"/>
+
+        <label for="dat">Дата</label>
+        <input type="date" class="form-control" id="dat" th:field="*{date}"/>
+
+        <label for="tim">Время</label>
+        <input type="time" class="form-control" id="tim" th:field="*{time}"/>
+
+        <label for="comment">Комментарий</label>
+        <textarea class="form-control" rows="5" id="comment" th:field="*{description}"/>
+
+        <label for="cost">Стоимость</label>
+        <input type="text" onkeyup="return clearSymbols(this);" onchange="return clearSymbols(this);"
+               pattern="\d+(.\d{2})?" class="form-control" id="cost" th:field="*{cost}"/>
+        <script type="text/javascript">
+            function clearSymbols(input) {
+                input.value = input.value.replace(/[^\d.]/g, '');
+            };
+        </script>
+
+</div>
+
+</body>
+</html>

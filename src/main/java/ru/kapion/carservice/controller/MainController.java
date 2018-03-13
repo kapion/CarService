@@ -20,6 +20,9 @@ public class MainController {
     @RequestMapping
     public String mainPage(Model model) {
         model.addAttribute("countCars", service.getCountCars());
+        model.addAttribute("countRepairs", service.getCountRepairs());
+        model.addAttribute("countRepairsComplete", service.getCountRepairsComplete());
+        model.addAttribute("countOwners", service.getCountOwners());
         return "main";
     }
 

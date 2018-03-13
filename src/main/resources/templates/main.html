@@ -27,13 +27,18 @@
                 <div class="well">
                     <div class="panel-body">
                         <h1>Добро пожаловать</h1>
+
                         <p>
                             Этот сайт является демо версией возможностей <b>framework'а Spring</b><br/>
-                            <a href="http://localhost:8082/">Администрирование БД H2</a>
+                            <a href="http://localhost:8082/" target="_blank">Администрирование БД H2</a>
                         </p>
+                        <p>Клиентов в базе: <span th:text="${countOwners}"/></p>
+                        <p>Автомобилей в базе: <span th:text="${countCars}"/></p>
+                        <p>Всего записей на ремонт/из них активных:
+                            <span th:text="${countRepairs}"/>/<span th:text="${countRepairsComplete}"/></p>
 
-                        <p>Всего автомобилей в базе: <span th:text="${countCars}"></span></p>
                     </div>
+                    <p>by @kapion</p>
                 </div>
             </div>
 

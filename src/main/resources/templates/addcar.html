@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <div th:replace="fragments/header :: header"/>
+    <style>
+
+        .to-one-line {display: inline-block;  padding: 5px;	}
+
+        .inputSize {width: 40px }
+        #year {width: 70px; }
+    </style>
+    <title>Страница оператора</title>
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu "/>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-8 text-left">
+            <form action="#" th:action="@{/cars/car/save}" th:object="${car}" method="post">
+                <h1 th:text="${title}"/>
+                <div class="form-group">
+                    <label for="owner">Клиент</label>
+                    <select id="owner" th:field="*{owner.id}">
+                        <option th:each="ownerOp : ${owners}"
+                                th:value="${ownerOp.id}"
+                                th:utext="${ownerOp.name}">
+                        </option>
+                    </select>
+                </div>
+                <div th:replace="fragments/carcontent :: carInfo "/>
+               <button type="submit" class="btn btn-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

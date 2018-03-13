@@ -2,16 +2,12 @@ package ru.kapion.carservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.kapion.carservice.dao.CarRepository;
+import ru.kapion.carservice.dao.specific.CarRepository;
 import ru.kapion.carservice.model.Car;
+import ru.kapion.carservice.model.Owner;
 import ru.kapion.carservice.model.Repair;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 
 @Service
@@ -23,16 +19,11 @@ public class CarService {
         repository.save(car);
     }
     public void delete(Integer id) {
-        repository.delete(getById(id));
+        repository.deleteById(id);
     }
 
     public List<Car> getAll() {
-        return StreamSupport
-                .stream(
-                        Spliterators.spliteratorUnknownSize(repository.findAll().iterator(), Spliterator.NONNULL),
-                        false)
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
+        return repository.getAll();
     }
 
     public Car getById(Integer id) {
@@ -41,5 +32,9 @@ public class CarService {
 
     public List<Repair> getRepairs(Integer id) {
         return repository.findById(id).orElse(new Car()).getRepairs();
+    }
+
+    public Owner getOwner(Integer id) {
+        return getById(id).getOwner();
     }
 }

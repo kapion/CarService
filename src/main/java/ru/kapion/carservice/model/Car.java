@@ -13,6 +13,10 @@ import java.util.*;
 @Getter
 @Entity
 public class Car implements Serializable, Comparable<Car> {
+    public Car() {
+        this.creationTimestamp = System.currentTimeMillis();
+        this.owner = new Owner();
+    }
 
     @Id
     @GeneratedValue
@@ -31,10 +35,6 @@ public class Car implements Serializable, Comparable<Car> {
     @Column
     private long creationTimestamp;
 
-    public Car() {
-        this.creationTimestamp = System.currentTimeMillis();
-    }
-
     @Override
     public int compareTo(Car that) {
         return Long.compare(this.creationTimestamp, that.creationTimestamp);
@@ -45,10 +45,13 @@ public class Car implements Serializable, Comparable<Car> {
          return DicHelper.getEngineTypes().get(engineType);
     }
 
-    @OneToMany(mappedBy = "carId",  cascade = CascadeType.ALL, orphanRemoval = true)
-  //  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "car",  cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Repair> repairs = new ArrayList<>();
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    //указываем ownerId только для того, чтобы поле в БД CAR.owner_id стало @NotNull
+    @JoinColumn(name = "ownerId", nullable = false)
+    private Owner owner;
 
 }

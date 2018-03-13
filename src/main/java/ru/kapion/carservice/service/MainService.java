@@ -2,25 +2,30 @@ package ru.kapion.carservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.kapion.carservice.dao.CarRepository;
-import ru.kapion.carservice.model.Car;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import ru.kapion.carservice.dao.specific.CarRepository;
+import ru.kapion.carservice.dao.specific.OwnerRepository;
+import ru.kapion.carservice.dao.specific.RepairRepository;
 
 
 @Service
 public class MainService {
     @Autowired
-    private CarRepository repository;
+    private CarRepository repositoryCar;
+    @Autowired
+    private RepairRepository repositoryRepair;
+    @Autowired
+    private OwnerRepository repositoryOwner;
 
-
-    public Long getCountCars() {
-        return repository.count();
+    public Long getCountRepairs() {
+        return repositoryRepair.count();
     }
-
+    public Long getCountRepairsComplete() {
+        return repositoryRepair.count();
+    }
+    public Long getCountCars() {
+        return repositoryCar.count();
+    }
+    public Long getCountOwners() {
+        return repositoryOwner.count();
+    }
 }

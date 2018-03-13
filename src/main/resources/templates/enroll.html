@@ -20,30 +20,11 @@
             <form action="#" th:action="@{/repairs/repair/save}" th:object="${repair}" method="post">
                 <h1 th:text="${title}"/>
                 <div class="form-group">
-                    <!-- id обязательно надо выводить, иначе в объекте будет null-->
-                    <input type="hidden" th:field="*{id}" />
-                    <input class="form-control"
-                           type="text"
-                           th:value="${car.id}" id="carId" name="carId" />
-                    <input type="text" th:field="${car.carModel}"/>
 
-
-
-                    <label for="service">Вид работ</label>
-                    <input type="text" class="form-control" id="service" th:field="*{service}"/>
-
-                    <label for="dat">Дата</label>
-                    <input type="date" class="form-control" id="dat" th:field="*{date}"/>
-
-                    <label for="tim">Время</label>
-                    <input type="time" class="form-control" id="tim" th:field="*{time}"/>
-                </div>
-                <div class="form-group">
-                    <label for="comment">Комментарий</label>
-                    <textarea class="form-control" rows="5" id="comment" th:field="*{description}"></textarea>
-                </div>
+                    <div th:replace="fragments/repaircontent :: repairInfo "/>
 
                 <button type="submit" class="btn btn-success">Записать</button>
+                </div>
             </form>
             <hr/>
         </div>

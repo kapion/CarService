@@ -27,14 +27,17 @@ public class RepairsController {
 
     @RequestMapping(value = "/enroll/{id}")
     public String enroll(@PathVariable Integer id,Model model) {
-        model.addAttribute("repair", new Repair());
-        model.addAttribute("car", carService.getById(id));
+        Repair repair =  new Repair();
+        repair.setCar(carService.getById(id));
+        model.addAttribute("repair",repair);
         model.addAttribute("title", "Запись на ремонт");
         return "enroll";
     }
 
     @PostMapping(value = "/repair/save")
     public String saveRepair(@ModelAttribute("repair") Repair repair) {
+        repair.setCar(carService.getById(repair.getCar().getId()));
+
         repService.save(repair);
         return "redirect:../";
     }
@@ -43,7 +46,6 @@ public class RepairsController {
     public String editRepair(@PathVariable Integer id, Model model) {
         Repair repair = repService.getById(id);
         model.addAttribute("repair", repair );
-        model.addAttribute("car",  carService.getById(repair.getCarId()));
         model.addAttribute("title", "Изменение данных записи на ремонт");
         return "repair";
     }
