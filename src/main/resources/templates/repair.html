@@ -23,16 +23,19 @@
                 <input type="hidden" th:field="*{id}" />
                 <div th:replace="fragments/repaircontent :: repairInfo "/>
 
-                <button type="submit" class="btn btn-success">Сохранить</button>
-            </form>
-            <form class="to-one-line" th:action="@{/repairs/del/{id}(id=${repair.id})}" method="post">
+                <!--Save-->
+                <button th:disabled="*{!active}" type="submit" class="btn btn-success">Сохранить</button>
+
+                <!--Active = false-->
+                <button th:disabled="*{!active}" type="submit" formaction="#"  th:attr="formaction=@{/repairs/repair/finish}" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-saved"></span> Завершить
+                </button>
                 <!--Delete-->
-                <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
-                <button type="submit" class="btn btn-default btn-sm">
+                <button type="submit"  formaction="#" th:attr="formaction=@{/repairs/del/{id}(id=${repair.id})}" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </form>
-            <hr/>
+          <hr/>
         </div>
     </div>
 </div>

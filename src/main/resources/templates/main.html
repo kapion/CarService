@@ -11,7 +11,7 @@
             border: solid 1px #000000;
             background-color: #fffff0;
         }
-        .ctrl {display: inline-block; }
+        .authorized {color: green  }
     </style>
     <title>Заглавная страница сервиса</title>
 </head>
@@ -26,20 +26,27 @@
             <div>
                 <div class="well">
                     <div class="panel-body">
-                        <h1>Добро пожаловать</h1>
+                        <h1>Автомастерская</h1>
 
                         <p>
-                            Этот сайт является демо версией возможностей <b>framework'а Spring</b><br/>
-                            <a href="http://localhost:8082/" target="_blank">Администрирование БД H2</a>
+                            Этот сайт является демонстрацией возможностей <b>framework'а Spring</b>:<br/>
+                            Spring Boot, Spring Web MVC, Spring JPA (Hibernate), Spring Security, Thymeleaf<br/>
+                            by @kapion
                         </p>
                         <p>Клиентов в базе: <span th:text="${countOwners}"/></p>
                         <p>Автомобилей в базе: <span th:text="${countCars}"/></p>
-                        <p>Всего записей на ремонт/из них активных:
-                            <span th:text="${countRepairs}"/>/<span th:text="${countRepairsComplete}"/></p>
+                        <p>Всего записей на ремонт <span th:text="${countRepairs}"/>,
+                            из них активных   <span th:text="${countRepairsComplete}"/></p>
 
+                        <p><a href="/h2admin" target="_blank">Администрирование БД H2 (jdbc:h2:mem:testdb)</a></p>
                     </div>
-                    <p>by @kapion</p>
-                </div>
+
+                    <div th:if="${isAuth}">
+                        <p class="authorized">Авторизирован <span th:text="${authUserName}"></span></p>
+                     </div>
+                    <div th:if="${!isAuth}">
+                        Demo login: master, password: pass
+                    </div>
             </div>
 
         </div>

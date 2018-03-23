@@ -13,19 +13,21 @@ import ru.kapion.carservice.utils.DicHelper;
 
 @Controller
 @RequestMapping("/clients")
-public class OwnersController {
+public class OwnersController implements SecurityCheck {
 
     @Autowired
     private OwnerService service;
 
     @RequestMapping
     public String ownersPage(Model model) {
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("owners", service.getAll(false));
         return "clients";
     }
 
     @RequestMapping(value = "/add")
     public String createOwner(Model model) {
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("owner", new Owner());
         model.addAttribute("title", "Добавление клиента");
         return "addowner";
@@ -39,6 +41,7 @@ public class OwnersController {
 
     @GetMapping(value = "/owner/{id}")
     public String editOwner(@PathVariable Integer id, Model model) {
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("owner", service.getById(id));
         model.addAttribute("title", "Изменение данных клиента");
     //   model.addAttribute("сфкы", service.getRepairs(id));

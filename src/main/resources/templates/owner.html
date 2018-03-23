@@ -23,25 +23,16 @@
                 <h1 th:text="${title}"/>
                 <!-- id обязательно надо выводить, иначе в объекте будет null-->
                 <input type="hidden" th:field="*{id}" />
-                <div class="form-group">
-                     <label for="name">Имя</label>
-                    <input type="text" class="form-control" id="name" required th:field="*{name}"/>
-
-                    <label for="tel">Телефон</label>
-                    <input type="tel" class="form-control" id="tel" required th:field="*{phone}"/>
-
-                    <label for="note">Заметка</label>
-                    <input type="text" class="form-control" id="note" required th:field="*{note}"/>
-                </div>
+                <div th:replace="fragments/ownercontent :: ownerInfo "/>
                 <button type="submit" class="btn btn-success">Сохранить</button>
-            </form>
-            <form class="to-one-line" th:action="@{/clients/del/{id}(id=${owner.id})}" method="post">
                 <!--Delete-->
                 <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
-                <button type="submit" class="btn btn-warning btn-sm">
+                <button type="submit" formaction="#" th:attr="formaction=@{/clients/del/{id}(id=${owner.id})}" class="btn btn-warning btn-sm to-one-line">
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </form>
+
+
 
         </div>
     </div>

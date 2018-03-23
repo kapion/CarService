@@ -6,6 +6,7 @@ import ru.kapion.carservice.utils.DicHelper;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -21,14 +22,14 @@ public class Car implements Serializable, Comparable<Car> {
     @Id
     @GeneratedValue
     private Integer id;
-
     @Column
     private String carModel;
     @Column
     private Integer year;
     @Column
     private String engineType;
-
+    @Column
+    private String engineCapacity;
     @Column(length = 1000000)
     @Lob
     private String content;
@@ -40,18 +41,18 @@ public class Car implements Serializable, Comparable<Car> {
         return Long.compare(this.creationTimestamp, that.creationTimestamp);
     }
 
-
     public String getEngineTypeName() {
          return DicHelper.getEngineTypes().get(engineType);
     }
 
-    @OneToMany(mappedBy = "car",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "car", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<Repair> repairs = new ArrayList<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //указываем ownerId только для того, чтобы поле в БД CAR.owner_id стало @NotNull
     @JoinColumn(name = "ownerId", nullable = false)
     private Owner owner;
+
 
 }

@@ -12,13 +12,15 @@ import ru.kapion.carservice.utils.DicHelper;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class MainController implements SecurityCheck{
 
     @Autowired
     private MainService service;
 
     @RequestMapping
     public String mainPage(Model model) {
+        model.addAttribute("isAuth", isAuth());
+        model.addAttribute("authUserName", getAuthName());
         model.addAttribute("countCars", service.getCountCars());
         model.addAttribute("countRepairs", service.getCountRepairs());
         model.addAttribute("countRepairsComplete", service.getCountRepairsComplete());
@@ -31,4 +33,5 @@ public class MainController {
     public String loginPage() {
         return "login";
     }
+
 }

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ru.kapion</groupId>
+	<groupId>ru.kapion.carservice</groupId>
 	<artifactId>carservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -30,6 +30,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<project.encoding>UTF-8</project.encoding>
+		<start-class>ru.kapion.carservice.CarServiceApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -48,7 +49,18 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-		<!-- разграничение доступа -->
+		<!-- подключаем tomcat для fat jar-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+        <!-- <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>-->
+
+        <!-- разграничение доступа -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -62,7 +74,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.196</version>
+			<!--version>1.4.196</version-->
 			<!--scope>runtime</scope-->
 		</dependency>
 
@@ -82,7 +94,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<!--optional>true</optional-->
 		</dependency>
 
 		<dependency>
@@ -90,6 +102,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -97,25 +111,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--configuration>
+					<executable>true</executable>
+				</configuration-->
 			</plugin>
-			<!--plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-						<encoding>${project.encoding}</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.3.9</version>
-					<configuration>
-						<encoding>${project.encoding}</encoding>
-					</configuration>
-				</plugin-->
-			</plugins>
+		</plugins>
 	</build>
 
 

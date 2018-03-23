@@ -7,7 +7,9 @@ import ru.kapion.carservice.model.Car;
 import ru.kapion.carservice.model.Owner;
 import ru.kapion.carservice.model.Repair;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,7 +33,10 @@ public class CarService {
     }
 
     public List<Repair> getRepairs(Integer id) {
-        return repository.findById(id).orElse(new Car()).getRepairs();
+        return repository.findById(id).orElse(new Car()).getRepairs()
+                .stream()
+                .sorted(Collections.reverseOrder())
+                .collect(Collectors.toList());
     }
 
     public Owner getOwner(Integer id) {

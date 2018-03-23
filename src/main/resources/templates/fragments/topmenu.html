@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <body>
@@ -12,17 +13,23 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
+        <div class="collapse navbar-collapse" id="myNavbar" >
             <ul class="nav navbar-nav">
                 <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <li><a href="/clients">Клиенты</a></li>
                 <li><a href="/cars">Автомобили</a></li>
                 <li><a href="/repairs">Ремонты</a></li>
+                <li><a href="/report">Сводный отчет</a></li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Авторизация</a></li>
+
+                <li th:if="!${isAuth}"> <a href="/login"><span class="glyphicon glyphicon-log-in"></span>Авторизация</a></li>
+                <li th:if="${isAuth}"> <a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Выход</a></li>
+
             </ul>
-        </div>
+            </div>
+         </div>
     </div>
 </nav>
 </body>

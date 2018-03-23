@@ -9,7 +9,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optional;
 
@@ -43,15 +45,27 @@ public class Repair implements Serializable, Comparable<Repair> {
     @Column
     private BigDecimal cost;
 
+    @Column
+    private Boolean active;
+
     @ManyToOne(fetch = FetchType.LAZY)
     //указываем carId только для того, чтобы поле в БД REPAIR.car_id стало @NotNull
     @JoinColumn(name = "carId", nullable = false)
     private Car car;
 
+
+    public String getFormatedDate(){
+        return date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+
+
     @Override
     public int compareTo(Repair that) {
        // return Integer.compare(car.carId, that.carId);
-        return date.compareTo(that.getDate());
+        LocalDateTime thisLD = LocalDateTime.of(this.date, this.time);
+        LocalDateTime thatLD = LocalDateTime.of(that.date, that.time);
+        return thisLD.compareTo(thatLD);
     }
 
 

@@ -34,10 +34,10 @@ public class OwnerService{
     public Owner createVirtual() {
 
         Owner newClient = new Owner();
-        newClient.setId(999);
-        newClient.setName("Александр");
+        newClient.setId(1);
+        newClient.setName("Виртуальный клиент");
         newClient.setPhone("+79999999999");
-        newClient.setNote("Виртуальный клиент");
+        newClient.setNote("Виртуальный клиент, данные которого требуется изменить после создания");
         return newClient;
     }
 

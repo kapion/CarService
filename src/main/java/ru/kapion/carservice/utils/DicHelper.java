@@ -1,5 +1,6 @@
 package ru.kapion.carservice.utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ public class DicHelper {
 
     private static Map<String, String> engineTypes;
     private static ArrayList<Integer> yearBuildOut;
+    private static ArrayList<String> capacity;
 
     public static Map<String, String> getEngineTypes() {
          if (engineTypes==null) {
@@ -34,5 +36,20 @@ public class DicHelper {
         }
 
         return yearBuildOut;
+    }
+
+    public static ArrayList<String> getCapacity(double min, double max){
+        if (capacity == null) {
+            capacity = new ArrayList<>();
+        }
+
+        if (!capacity.contains(min) || !capacity.contains(max)) {
+            capacity.clear();
+            for (double i = min; i <= max; i=i+0.1) {
+                capacity.add(String.format("%1.1f",i));
+            }
+        }
+
+        return capacity;
     }
 }

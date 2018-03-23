@@ -21,16 +21,7 @@
         <div class="col-sm-8 text-left">
             <form action="#" th:action="@{/clients/owner/save}" th:object="${owner}" method="post">
                 <h1 th:text="${title}"/>
-                <div class="form-group">
-                     <label for="name">Имя</label>
-                    <input type="text" class="form-control" id="name" required th:field="*{name}"/>
-
-                    <label for="tel">Телефон</label>
-                    <input type="tel" class="form-control" id="tel" required th:field="*{phone}"/>
-
-                    <label for="note">Заметка</label>
-                    <input type="text" class="form-control" id="note" required th:field="*{note}"/>
-                </div>
+                <div th:replace="fragments/ownercontent :: ownerInfo"/>
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </form>
         </div>

@@ -5,7 +5,12 @@ import org.springframework.stereotype.Service;
 import ru.kapion.carservice.dao.specific.RepairRepository;
 import ru.kapion.carservice.model.Repair;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -22,6 +27,18 @@ public class RepairService {
 
     public List<Repair> getAll() {
         return repository.getAll();
+    }
+
+
+    //Сумма по столбцу cost
+    public BigDecimal getAllSum() {
+        List<BigDecimal> costList = new ArrayList<>();
+        Function<Repair, BigDecimal> totalMapper = r -> r.getCost().plus();
+
+        BigDecimal result = getAll().stream()
+                .map(totalMapper)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return result;
     }
 
 

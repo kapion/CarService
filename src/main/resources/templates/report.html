@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <div th:replace="fragments/header :: header"/>
+    <style>
+        ul.car-info > li {
+            display: inline;	/* Располагаем элементы по горизонтали */
+            list-style: none;	/* Убираем маркеры списка */
+            padding: 5px;		/* Поля вокруг текста */
+            border: solid 1px #000000;
+            background-color: #fffff0;
+        }
+        .to-one-line {display: inline-block; }
+    </style>
+    <style type="text/css">
+        .tg  { table-layout: auto;  width: 100%; border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg .tg-6xid{font-family:Impact, Charcoal, sans-serif !important;;vertical-align:top}
+        .tg .tg-yw4l{vertical-align:top}
+        .tg .tg-yw42{vertical-align:top; horiz-align: center; text-align: center}
+        .tg .tg-itogo{vertical-align:top; font-weight:bold; }
+    </style>
+    <title>Сводный отчет</title>
+</head>
+<body>
+
+<div th:replace="fragments/topmenu :: topmenu "/>
+
+<br/>
+<div class="container-fluid text-center">
+    <div class="row content">
+       <div class="col-sm-8 text-left">
+           <table class="tg">
+               <tr>
+                   <th class="tg-6xid">Статус</th>
+                   <th class="tg-6xid" width="300px">Наименование ремонта</th>
+                   <th class="tg-6xid">Стоимость</th>
+                   <th class="tg-6xid" th:type="date">Дата</th>
+                   <th class="tg-6xid">Время</th>
+                   <th class="tg-6xid">Автомобиль</th>
+                   <th class="tg-6xid">Тип двигателя</th>
+                   <th class="tg-6xid">Объем двигателя</th>
+                   <th class="tg-6xid">Год</th>
+                   <th class="tg-6xid">Владелец</th>
+                   <th class="tg-6xid" width="170px">Телефон</th>
+               </tr>
+               <tr th:each="item : ${report}">
+                   <td class="tg-yw42"><span  th:if="*{!item.repair.active}"><h4 class="glyphicon glyphicon-ok"></h4></span>
+                       <span  th:if="*{item.repair.active}"><h4 class="glyphicon glyphicon-time"></h4></span>
+                   </td>
+                   <td class="tg-yw4l"><a th:href="@{/repairs/repair/{id}(id=*{item.repair.id})}"><span th:text="*{item.repair.service}"/></a></td>
+                   <td class="tg-yw4l" th:text="*{item.repair.cost}"></td>
+                   <td class="tg-yw4l" th:text="*{item.repair.getFormatedDate()}"></td>
+                   <td class="tg-yw4l" th:text="*{item.repair.time}"></td>
+                   <td class="tg-yw4l"><a th:href="@{/cars/car/{id}(id=*{item.car.id})}"><span th:text="*{item.car.carModel}"/></a></td>
+                   <td class="tg-yw4l" th:text="*{item.car.getEngineTypeName()}"></td>
+                   <td class="tg-yw4l" th:text="*{item.car.engineCapacity}"></td>
+                   <td class="tg-yw4l" th:text="*{item.car.year}"></td>
+                   <td class="tg-yw4l"><a th:href="@{/clients/owner/{id}(id=*{item.owner.id})}"><span th:text="*{item.owner.name}"/></a></td>
+                   <td class="tg-yw4l" th:text="*{item.owner.phone}"></td>
+               </tr>
+               <tfoot>
+
+               <tr th:if="${!report.isEmpty()}">
+
+                   <td class="tg-itogo">Итого</td>
+
+                   <td class="tg-itogo" th:text="${summa}"></td>
+
+               </tr>
+
+               </tfoot>
+
+           </table>
+           <div th:if="${report.isEmpty()}">
+               <p>Нет данных для отображения.</p>
+           </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

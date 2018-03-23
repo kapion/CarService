@@ -11,13 +11,15 @@
             border: solid 1px #000000;
             background-color: #fffff0;
         }
-        .to-one-line {display: inline-block; }
+        .to-one-line { display: inline-block }
+        .close-repair { text-decoration:line-through }
     </style>
     <title>Ремонты</title>
 </head>
 <body>
 
 <div th:replace="fragments/topmenu :: topmenu "/>
+
 
 <br/>
 <div class="container-fluid text-center">
@@ -26,15 +28,18 @@
             <!--a href="/repair/" class="btn btn-info btn-sm">
                 <span class="glyphicon glyphicon-plus"></span> Добавить
             </a-->
-
-
+            <div th:if="${repairs.isEmpty()}">
+                <p>Ни один автомобиль еще не записан на ремонт.</p>
+            </div>
+            <p>Перейдите в раздел <a th:href="@{/cars}">Автомобили</a>, чтобы создать запись о ремонте.</p>
             <div th:each="repair : ${repairs}">
-
-                <a  th:href="@{/repairs/repair/{id}(id=${repair.id})}"><h3 class="to-one-line" th:text="${repair.service}"/>
-                    <!--h3 th:text="${repair.getCurrentCar().getCarModel()}" /-->
+                <a  th:href="@{/repairs/repair/{id}(id=${repair.id})}">
+                    <h3 class="to-one-line" th:classappend="${repair.active} ? '' : 'close-repair'"  th:text="${repair.service}"/>
                 </a>
-
-
+                    <div class="to-one-line" th:text="*{repair.date}"/>
+                    <div class="to-one-line" th:text="*{repair.time}"/>
+                    <div class="to-one-line" th:text="*{repair.car.carModel}"/>
+                    <div class="to-one-line" th:text="*{repair.description}"/>
                 <hr/>
             </div>
         </div>

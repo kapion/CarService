@@ -6,6 +6,12 @@ import ru.kapion.carservice.dao.specific.CarRepository;
 import ru.kapion.carservice.dao.specific.OwnerRepository;
 import ru.kapion.carservice.dao.specific.RepairRepository;
 
+import java.util.Collections;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 
 @Service
 public class MainService {
@@ -20,7 +26,7 @@ public class MainService {
         return repositoryRepair.count();
     }
     public Long getCountRepairsComplete() {
-        return repositoryRepair.count();
+        return repositoryRepair.getAll().stream().filter(r->r.getActive()).collect(Collectors.counting());
     }
     public Long getCountCars() {
         return repositoryCar.count();

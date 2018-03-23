@@ -8,10 +8,13 @@ import ru.kapion.carservice.model.Repair;
 import ru.kapion.carservice.service.CarService;
 import ru.kapion.carservice.service.RepairService;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 @Controller
 @RequestMapping("/repairs")
-public class RepairsController {
+public class RepairsController implements SecurityCheck {
 
     @Autowired
     private RepairService repService;
@@ -21,6 +24,7 @@ public class RepairsController {
 
     @RequestMapping
     public String repsPage(Model model) {
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("repairs", repService.getAll());
         return "repairs";
     }
@@ -28,7 +32,11 @@ public class RepairsController {
     @RequestMapping(value = "/enroll/{id}")
     public String enroll(@PathVariable Integer id,Model model) {
         Repair repair =  new Repair();
+        repair.setDate(LocalDate.now());
+        repair.setTime(LocalTime.now().plusHours(1).withMinute(0));
         repair.setCar(carService.getById(id));
+        repair.setActive(true);
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("repair",repair);
         model.addAttribute("title", "Запись на ремонт");
         return "enroll";
@@ -37,7 +45,14 @@ public class RepairsController {
     @PostMapping(value = "/repair/save")
     public String saveRepair(@ModelAttribute("repair") Repair repair) {
         repair.setCar(carService.getById(repair.getCar().getId()));
+        repService.save(repair);
+        return "redirect:../";
+    }
 
+    @PostMapping(value = "/repair/finish")
+    public String saveRepairAndClose(@ModelAttribute("repair") Repair repair) {
+        repair.setCar(carService.getById(repair.getCar().getId()));
+        repair.setActive(false);
         repService.save(repair);
         return "redirect:../";
     }
@@ -45,8 +60,13 @@ public class RepairsController {
     @GetMapping(value = "/repair/{id}")
     public String editRepair(@PathVariable Integer id, Model model) {
         Repair repair = repService.getById(id);
+        model.addAttribute("isAuth", isAuth());
         model.addAttribute("repair", repair );
-        model.addAttribute("title", "Изменение данных записи на ремонт");
+        if (repair.getActive()) {
+            model.addAttribute("title", "Изменение данных записи на ремонт");
+        }else {
+            model.addAttribute("title", "Обслуживание завершено");
+        }
         return "repair";
     }
 

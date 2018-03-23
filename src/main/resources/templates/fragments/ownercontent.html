@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+
+<body>
+<div class="form-group" th:fragment="ownerInfo">
+
+                <label for="name">Имя</label>
+                <input type="text" class="form-control" id="name" required th:field="*{name}"/>
+
+                <label for="tel">Телефон</label>
+                <input type="tel" class="form-control" id="tel" required th:field="*{phone}"/>
+
+                <label for="note">Заметка</label>
+                <input type="text" class="form-control" id="note" th:field="*{note}"/>
+
+</div>
+
+</body>
+</html>

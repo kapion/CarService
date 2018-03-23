@@ -6,34 +6,46 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@Import(H2ServerConfiguration.class)
+//@Import(H2ServerConfiguration.class)
+@Import(H2ServerConfiguration2.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity config) throws Exception {
         config
                 .authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/cars").permitAll()
                 .antMatchers("/repairs").permitAll()
-                .antMatchers("/cars/addcar").hasRole("EDITOR")
-                .antMatchers("/cars/car/*").hasRole("EDITOR")
-                .antMatchers("/cars/del/*").hasRole("EDITOR")
-                .antMatchers("/repairs/enroll/*").hasRole("EDITOR")
-                .antMatchers("/repairs/repair/*").hasRole("EDITOR")
-                .antMatchers("/repairs/del/*").hasRole("EDITOR")
-                .antMatchers("/h2-console").hasRole("EDITOR")
+                .antMatchers("/clients").permitAll()
+                .antMatchers("/report").permitAll()
+                .antMatchers("/h2admin/**").hasRole("ADMIN")
+                .antMatchers("/cars/addcar").hasRole("ADMIN")
+                .antMatchers("/cars/car/*").hasRole("ADMIN")
+                .antMatchers("/cars/del/*").hasRole("ADMIN")
+                .antMatchers("/repairs/enroll/*").hasRole("ADMIN")
+                .antMatchers("/repairs/repair/*").hasRole("ADMIN")
+                .antMatchers("/repairs/del/*").hasRole("ADMIN")
+                .antMatchers("/clients/del/*").hasRole("ADMIN")
+                .antMatchers("/clients/add").hasRole("ADMIN")
+                .antMatchers("/clients/owner/*").hasRole("ADMIN")
                 .and()
-                //.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().logoutUrl("/logout").permitAll();
+                 // logout через get запрос
+                 // https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#csrf-logout
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+        config.csrf().disable();
+        config.httpBasic();
+        config.headers().frameOptions().sameOrigin();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
         builder.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("EDITOR");
+                .withUser("master").password("{noop}pass").roles("ADMIN");
     }
 }

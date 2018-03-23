@@ -20,7 +20,6 @@
             <form action="#" th:action="@{/repairs/repair/save}" th:object="${repair}" method="post">
                 <h1 th:text="${title}"/>
                 <div class="form-group">
-
                     <div th:replace="fragments/repaircontent :: repairInfo "/>
 
                 <button type="submit" class="btn btn-success">Записать</button>
