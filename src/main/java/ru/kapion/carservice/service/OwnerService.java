@@ -37,7 +37,7 @@ public class OwnerService{
         newClient.setId(1);
         newClient.setName("Виртуальный клиент");
         newClient.setPhone("+79999999999");
-        newClient.setNote("Виртуальный клиент, данные которого требуется изменить после создания");
+        newClient.setNote("Клиент, добавленный вместе с первым автомобилем, данные которого требуется изменить после создания");
         return newClient;
     }
 

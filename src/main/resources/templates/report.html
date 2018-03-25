@@ -18,9 +18,11 @@
         .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
         .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
         .tg .tg-6xid{font-family:Impact, Charcoal, sans-serif !important;;vertical-align:top}
+        .tg .tg-yw40{vertical-align:top; text-align: right}
         .tg .tg-yw4l{vertical-align:top}
         .tg .tg-yw42{vertical-align:top; horiz-align: center; text-align: center}
         .tg .tg-itogo{vertical-align:top; font-weight:bold; }
+        .tg .tg-itogo-sum{vertical-align:top; font-weight:bold; text-align: right}
     </style>
     <title>Сводный отчет</title>
 </head>
@@ -44,14 +46,14 @@
                    <th class="tg-6xid">Объем двигателя</th>
                    <th class="tg-6xid">Год</th>
                    <th class="tg-6xid">Владелец</th>
-                   <th class="tg-6xid" width="170px">Телефон</th>
+                   <th class="tg-6xid" width="200px">Телефон</th>
                </tr>
                <tr th:each="item : ${report}">
                    <td class="tg-yw42"><span  th:if="*{!item.repair.active}"><h4 class="glyphicon glyphicon-ok"></h4></span>
                        <span  th:if="*{item.repair.active}"><h4 class="glyphicon glyphicon-time"></h4></span>
                    </td>
                    <td class="tg-yw4l"><a th:href="@{/repairs/repair/{id}(id=*{item.repair.id})}"><span th:text="*{item.repair.service}"/></a></td>
-                   <td class="tg-yw4l" th:text="*{item.repair.cost}"></td>
+                   <td class="tg-yw40" th:text="*{item.repair.cost}"></td>
                    <td class="tg-yw4l" th:text="*{item.repair.getFormatedDate()}"></td>
                    <td class="tg-yw4l" th:text="*{item.repair.time}"></td>
                    <td class="tg-yw4l"><a th:href="@{/cars/car/{id}(id=*{item.car.id})}"><span th:text="*{item.car.carModel}"/></a></td>
@@ -67,7 +69,7 @@
 
                    <td class="tg-itogo">Итого</td>
 
-                   <td class="tg-itogo" th:text="${summa}"></td>
+                   <td colspan="2" class="tg-itogo-sum" th:text="${summa}"></td>
 
                </tr>
 

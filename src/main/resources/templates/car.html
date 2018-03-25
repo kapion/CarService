@@ -5,7 +5,7 @@
     <div th:replace="fragments/header :: header"/>
     <style>
 
-        .to-one-line {display: inline-block;  padding: 5px;	}
+        .to-one-line {display: inline-block; }
         .close-repair { text-decoration:line-through }
         .inputSize {width: 40px }
         #year {width: 70px; }
@@ -37,10 +37,9 @@
                 </button>
 
                 <!--Enroll repair-->
-                <!--a href type="submit"><span class="glyphicon glyphicon-trash"></span></a-->
-                <button type="submit" formaction="#" th:attr="formaction=@{/repairs/enroll/{id}(id=${car.id})}" class="to-one-line btn btn-info btn-sm">
-                       <span class="glyphicon glyphicon-wrench"></span> Записать на ремонт
-                </button>
+                <a th:href="@{/cars/car/{id}/enroll(id=${car.id})}" class="to-one-line btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-wrench"></span> Записать на ремонт
+                </a>
 
             </form>
 

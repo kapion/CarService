@@ -34,6 +34,6 @@ public class Owner implements Serializable, Comparable<Owner>  {
         return name.compareTo(owner.getName());
     }
 
-    @OneToMany(mappedBy = "owner",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner",  cascade = CascadeType.ALL)
     private List<Car> ownerCars = new ArrayList<>();
 }

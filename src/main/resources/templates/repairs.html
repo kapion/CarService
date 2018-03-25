@@ -11,7 +11,7 @@
             border: solid 1px #000000;
             background-color: #fffff0;
         }
-        .to-one-line { display: inline-block }
+        .to-one-line5 { display: inline-block; padding: 5px; }
         .close-repair { text-decoration:line-through }
     </style>
     <title>Ремонты</title>
@@ -34,12 +34,13 @@
             <p>Перейдите в раздел <a th:href="@{/cars}">Автомобили</a>, чтобы создать запись о ремонте.</p>
             <div th:each="repair : ${repairs}">
                 <a  th:href="@{/repairs/repair/{id}(id=${repair.id})}">
-                    <h3 class="to-one-line" th:classappend="${repair.active} ? '' : 'close-repair'"  th:text="${repair.service}"/>
+                    <h3  class="to-one-line5" th:classappend="${repair.active} ? '' : 'close-repair'" th:text="*{repair.getFormatedDate()}"/>
+                    <h3  class="to-one-line5" th:classappend="${repair.active} ? '' : 'close-repair'" th:text="*{repair.time}"/>
+                    <h3  class="to-one-line5" th:classappend="${repair.active} ? '' : 'close-repair'" th:text="${repair.service}"/>
                 </a>
-                    <div class="to-one-line" th:text="*{repair.date}"/>
-                    <div class="to-one-line" th:text="*{repair.time}"/>
-                    <div class="to-one-line" th:text="*{repair.car.carModel}"/>
-                    <div class="to-one-line" th:text="*{repair.description}"/>
+
+                    <div class="to-one-line5" th:text="*{repair.car.carModel}"/>
+                    <div class="to-one-line5" th:text="*{repair.description}"/>
                 <hr/>
             </div>
         </div>

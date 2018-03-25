@@ -4,11 +4,7 @@
 
 <head>
     <div th:replace="fragments/header :: header"/>
-    <style>
-
-        .to-one-line {display: inline-block;  padding: 5px;	}
-    </style>
-    <title>Страница оператора</title>
+    <title th:text="${title}"/>
 </head>
 <body>
 
@@ -17,15 +13,19 @@
 <div class="container-fluid text-center">
     <div class="row content">
         <div class="col-sm-8 text-left">
-            <form action="#" th:action="@{/repairs/repair/save}" th:object="${repair}" method="post">
+            <form  th:action="@{/cars/car/{id}/enroll(id=${repair.car.id})}"  th:object="${repair}" method="post">
                 <h1 th:text="${title}"/>
                 <div class="form-group">
                     <div th:replace="fragments/repaircontent :: repairInfo "/>
-
-                <button type="submit" class="btn btn-success">Записать</button>
+                    <button type="submit" class="btn btn-success">Записать</button>
+                    <p th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Name Error</p>
                 </div>
+
             </form>
-            <hr/>
+            <div th:if="${!objectError.defaultMessage.isEmpty()}"
+                 class="alert alert-danger" data-th-cellpadding="5">
+                <p th:text="${objectError.defaultMessage}"></p>
+            </div>
         </div>
     </div>
 </div>

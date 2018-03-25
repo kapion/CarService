@@ -35,7 +35,6 @@ public class CarsController implements SecurityCheck{
 
     @RequestMapping(value = "/addcar")
     public String createCar(Model model) {
-
         Car car = new Car();
         model.addAttribute("isAuth", isAuth());
         model.addAttribute("owners", ownerService.getAll(true));

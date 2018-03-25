@@ -5,12 +5,12 @@
     <div th:replace="fragments/header :: header"/>
     <style>
 
-        .to-one-line {display: inline-block;  padding: 5px;	}
+        .to-one-line {display: inline-block;}
 
         .inputSize {width: 40px }
         #year {width: 70px; }
     </style>
-    <title>Страница оператора</title>
+    <title th:text="${title}"/>
 </head>
 <body>
 

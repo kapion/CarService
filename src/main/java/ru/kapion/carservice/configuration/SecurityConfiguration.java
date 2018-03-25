@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cars/addcar").hasRole("ADMIN")
                 .antMatchers("/cars/car/*").hasRole("ADMIN")
                 .antMatchers("/cars/del/*").hasRole("ADMIN")
-                .antMatchers("/repairs/enroll/*").hasRole("ADMIN")
+                .antMatchers("/cars/car/*/enroll").hasRole("ADMIN")
                 .antMatchers("/repairs/repair/*").hasRole("ADMIN")
                 .antMatchers("/repairs/del/*").hasRole("ADMIN")
                 .antMatchers("/clients/del/*").hasRole("ADMIN")
@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
         config.csrf().disable();
         config.httpBasic();
+
         config.headers().frameOptions().sameOrigin();
     }
 

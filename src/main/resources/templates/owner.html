@@ -10,7 +10,7 @@
         .inputSize {width: 40px }
         #year {width: 70px; }
     </style>
-    <title>Страница оператора</title>
+    <title th:text="${title}"/>
 </head>
 <body>
 
@@ -31,7 +31,13 @@
                     <span class="glyphicon glyphicon-trash"></span> Удалить
                 </button>
             </form>
-
+            <div th:if="${!owner.getOwnerCars().isEmpty()}">
+                <hr/>
+                <strong>Автомобили клиента:</strong>
+                <div th:each="car : ${owner.getOwnerCars()}">
+                    <a class="to-one-line" th:href="@{/cars/car/{id}(id=${car.id})}"><h3  th:text="${car.carModel}"/></a>
+                </div>
+            </div>
 
 
         </div>

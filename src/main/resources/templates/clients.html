@@ -26,9 +26,7 @@
            <a href="/clients/add" class="btn btn-info btn-sm">
                <span class="glyphicon glyphicon-plus"></span> Добавить
            </a>
-
-
-            <div th:each="owner : ${owners}">
+           <div th:each="owner : ${owners}">
 
                 <a class="to-one-line" th:href="@{/clients/owner/{id}(id=${owner.id})}"><h3  th:text="${owner.name}"/></a>
 

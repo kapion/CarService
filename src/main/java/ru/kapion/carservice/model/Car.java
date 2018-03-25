@@ -45,7 +45,7 @@ public class Car implements Serializable, Comparable<Car> {
          return DicHelper.getEngineTypes().get(engineType);
     }
 
-    @OneToMany(mappedBy = "car", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "car", orphanRemoval = true)
     private List<Repair> repairs = new ArrayList<>();
 
 

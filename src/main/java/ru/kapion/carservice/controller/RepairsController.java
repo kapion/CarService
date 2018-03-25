@@ -1,19 +1,27 @@
 package ru.kapion.carservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.kapion.carservice.model.Repair;
 import ru.kapion.carservice.service.CarService;
 import ru.kapion.carservice.service.RepairService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 
 @Controller
-@RequestMapping("/repairs")
+@RequestMapping("/")
 public class RepairsController implements SecurityCheck {
 
     @Autowired
@@ -22,14 +30,14 @@ public class RepairsController implements SecurityCheck {
     @Autowired
     private CarService carService;
 
-    @RequestMapping
+    @RequestMapping(value = "repairs")
     public String repsPage(Model model) {
         model.addAttribute("isAuth", isAuth());
         model.addAttribute("repairs", repService.getAll());
         return "repairs";
     }
 
-    @RequestMapping(value = "/enroll/{id}")
+    @GetMapping(value = "cars/car/{id}/enroll")
     public String enroll(@PathVariable Integer id,Model model) {
         Repair repair =  new Repair();
         repair.setDate(LocalDate.now());
@@ -39,17 +47,44 @@ public class RepairsController implements SecurityCheck {
         model.addAttribute("isAuth", isAuth());
         model.addAttribute("repair",repair);
         model.addAttribute("title", "Запись на ремонт");
+        ObjectError objectError = new ObjectError("","" );
+        model.addAttribute("objectError",objectError);
         return "enroll";
     }
 
-    @PostMapping(value = "/repair/save")
-    public String saveRepair(@ModelAttribute("repair") Repair repair) {
+    @PostMapping(value = "cars/car/{carId}/enroll")
+    public String saveEnroll(@PathVariable Integer carId,
+            @ModelAttribute("repair") Repair repair, BindingResult result, Model model ) {
+        repair.setCar(carService.getById(carId));
+        // если Id пустой, то это новая запись о ремонте
+        if (repair.getId() == null
+              && repService.isExistRepair(repair.getDate(),repair.getTime())) {
+
+            ObjectError objectError = new ObjectError("time", //поле, которое будет подсвечено
+                    "Это время ремонта уже занято, выберите другое время.");
+            result.addError(objectError);
+           // пришлось изобретать велосипед, потому что Thymeleaf вылидация .hasErrors не работает
+            //<p th:if="${#fields.hasErrors('time')}" th:errors="{*time}">Name Error</p>
+            model.addAttribute("isAuth", isAuth());
+            model.addAttribute("title", "Запись на ремонт");
+            model.addAttribute("objectError",objectError);
+           // т.к. была ошибка заново вызываем форму
+            return "enroll";
+        }
+        repService.save(repair);
+        return "redirect:/repairs";
+    }
+
+
+    @PostMapping(value = "repairs/repair/save")
+    public String saveRepair( @ModelAttribute("repair") Repair repair) {
         repair.setCar(carService.getById(repair.getCar().getId()));
         repService.save(repair);
         return "redirect:../";
     }
 
-    @PostMapping(value = "/repair/finish")
+
+    @PostMapping(value = "repairs/repair/finish")
     public String saveRepairAndClose(@ModelAttribute("repair") Repair repair) {
         repair.setCar(carService.getById(repair.getCar().getId()));
         repair.setActive(false);
@@ -57,7 +92,7 @@ public class RepairsController implements SecurityCheck {
         return "redirect:../";
     }
 
-    @GetMapping(value = "/repair/{id}")
+    @GetMapping(value = "repairs/repair/{id}")
     public String editRepair(@PathVariable Integer id, Model model) {
         Repair repair = repService.getById(id);
         model.addAttribute("isAuth", isAuth());
@@ -70,7 +105,7 @@ public class RepairsController implements SecurityCheck {
         return "repair";
     }
 
-    @PostMapping(value = "/del/{id}")
+    @PostMapping(value = "repairs/del/{id}")
     public String deleteCar(@PathVariable Integer id) {
         repService.delete(id);
         return "redirect:../";

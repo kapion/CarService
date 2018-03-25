@@ -1,11 +1,14 @@
 package ru.kapion.carservice.service;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kapion.carservice.dao.specific.RepairRepository;
 import ru.kapion.carservice.model.Repair;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -54,4 +57,11 @@ public class RepairService {
     public Repair getById(Integer id) {
         return repository.findById(id).orElse(new Repair());
     }
+
+    public boolean isExistRepair(LocalDate localDate, LocalTime localTime) {
+        return repository.getAll().stream()
+                .filter(repair -> repair.getDate().equals(localDate))
+               // .filter(repair -> repair.getTime().equals(localTime)).findFirst().isPresent();
+                .anyMatch(repair -> repair.getTime().equals(localTime));
+     }
 }
