@@ -17,6 +17,7 @@ public class IntegerHelper {
         return convertStringToInteger(ins);
     }
 
+    //Расширенный парсер строки в BigDecimal
     public static BigDecimal toAbsoluteDecimal(String beanAmount) {
         if (beanAmount==null || beanAmount.isEmpty()) {
             throw new NumberFormatException("Нечего парсить");

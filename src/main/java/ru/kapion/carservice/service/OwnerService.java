@@ -6,6 +6,7 @@ import ru.kapion.carservice.dao.specific.OwnerRepository;
 import ru.kapion.carservice.model.Owner;
 
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -13,8 +14,10 @@ public class OwnerService{
     @Autowired
     private OwnerRepository repository;
 
-    public void save(Owner owner) {
-        repository.save(owner);
+    public Integer save(Owner owner) {
+       repository.save(owner);
+       Owner savedOwner = repository.findByUniquePhone(owner.getPhone()).stream().findFirst().get();
+       return savedOwner.getId();
     }
     public void delete(Integer id) {
         repository.deleteById(id);
@@ -28,19 +31,23 @@ public class OwnerService{
         return all;
     }
     public Owner getById(Integer id) {
-        return repository.findById(id).orElse(new Owner());
+         return id != null ? repository.findById(id).get() : null;
     }
 
     public Owner createVirtual() {
-
         Owner newClient = new Owner();
-        newClient.setId(1);
         newClient.setName("Виртуальный клиент");
-        newClient.setPhone("+79999999999");
+
+        Random random = new Random();
+        newClient.setPhone("9"+random.nextInt(99999999));
         newClient.setNote("Клиент, добавленный вместе с первым автомобилем, данные которого требуется изменить после создания");
         return newClient;
     }
 
+
+    public boolean isExist(Owner owner) {
+        return repository.findByUniquePhone(owner.getPhone()).size() > 0;
+    }
 
 
     //public List<Car> getCars(Integer id) {  return repository.findById(id).orElse(new Owner()).getRepairs();   }

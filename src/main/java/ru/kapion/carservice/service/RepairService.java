@@ -44,16 +44,6 @@ public class RepairService {
         return result;
     }
 
-
-//    public List<Repair> getAll() {
-//        return StreamSupport
-//                .stream(
-//                        Spliterators.spliteratorUnknownSize(repository.findAll().iterator(), Spliterator.NONNULL),
-//                        false)
-//                .sorted(Comparator.reverseOrder())
-//                .collect(Collectors.toList());
-//    }
-
     public Repair getById(Integer id) {
         return repository.findById(id).orElse(new Repair());
     }
@@ -61,7 +51,6 @@ public class RepairService {
     public boolean isExistRepair(LocalDate localDate, LocalTime localTime) {
         return repository.getAll().stream()
                 .filter(repair -> repair.getDate().equals(localDate))
-               // .filter(repair -> repair.getTime().equals(localTime)).findFirst().isPresent();
                 .anyMatch(repair -> repair.getTime().equals(localTime));
      }
 }

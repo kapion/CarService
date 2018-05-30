@@ -42,4 +42,8 @@ public class CarService {
     public Owner getOwner(Integer id) {
         return getById(id).getOwner();
     }
+
+    public boolean isExist(Car car) {
+        return repository.findByRegNum(car.getRegNum()).size() > 0;
+    }
 }

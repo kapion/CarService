@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-
 <body>
 <nav class="navbar navbar-inverse" th:fragment="topmenu">
     <div class="container-fluid">
@@ -23,10 +22,8 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-
                 <li th:if="!${isAuth}"> <a href="/login"><span class="glyphicon glyphicon-log-in"></span>Авторизация</a></li>
-                <li th:if="${isAuth}"> <a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Выход</a></li>
-
+                <li th:if="${isAuth}"><a href="/logout"><span th:text="${authUserName}"></span> <span class="glyphicon glyphicon-log-out"></span>Выход</a></li>
             </ul>
             </div>
          </div>

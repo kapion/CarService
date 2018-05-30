@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<body>
+<div th:fragment="message-block">
+    <p id="success-message" th:text="${successMessage}"/>
+    <script>
+        var result = document.querySelector('#success-message').textContent;
+        if (result != '') {
+            $('#success-message').animate({"height": 20}, 2000).animate({"height": 0}, "slow");
+        }
+    </script>
+</div>
+</body>
+</html>

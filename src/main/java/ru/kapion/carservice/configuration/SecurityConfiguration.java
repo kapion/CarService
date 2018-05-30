@@ -8,11 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 @Configuration
 //@Import(H2ServerConfiguration.class)
 @Import(H2ServerConfiguration2.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity config) throws Exception {
         config
@@ -35,8 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                 // logout через get запрос
-                 // https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#csrf-logout
+                // logout через get запрос
+                // https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#csrf-logout
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
         config.csrf().disable();
         config.httpBasic();

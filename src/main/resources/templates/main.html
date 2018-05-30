@@ -3,16 +3,7 @@
 
 <head>
     <div th:replace="fragments/header :: header"/>
-    <style>
-        ul.currentCar-info > li {
-            display: inline;	/* Располагаем элементы по горизонтали */
-            list-style: none;	/* Убираем маркеры списка */
-            padding: 5px;		/* Поля вокруг текста */
-            border: solid 1px #000000;
-            background-color: #fffff0;
-        }
-        .authorized {color: green  }
-    </style>
+
     <title>Заглавная страница сервиса</title>
 </head>
 <body>
@@ -37,18 +28,16 @@
                         <p>Автомобилей в базе: <span th:text="${countCars}"/></p>
                         <p>Всего записей на ремонт <span th:text="${countRepairs}"/>,
                             из них активных   <span th:text="${countRepairsComplete}"/></p>
-
                         <p><a href="/h2admin" target="_blank">Администрирование БД H2 (jdbc:h2:mem:testdb)</a></p>
                     </div>
 
-                    <div th:if="${isAuth}">
-                        <p class="authorized">Авторизирован <span th:text="${authUserName}"></span></p>
-                     </div>
                     <div th:if="${!isAuth}">
                         Demo login: master, password: pass
                     </div>
+                    <div th:if="${isAuth}">
+                        <p class="auth">Авторизирован <span th:text="${authUserName}"></span><p>
+                    </div>
             </div>
-
         </div>
     </div>
 </div>

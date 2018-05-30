@@ -23,6 +23,8 @@ public class Car implements Serializable, Comparable<Car> {
     @GeneratedValue
     private Integer id;
     @Column
+    private String regNum;
+    @Column
     private String carModel;
     @Column
     private Integer year;

@@ -4,6 +4,8 @@
 
 <body>
 <div class="form-group" th:fragment="carInfo">
+    <label for="reg">Госномер</label>
+    <input type="text" class="form-control inputSize" id="reg" required th:field="*{regNum}"/>
     <label for="usr">Название</label>
     <input type="text" class="form-control" id="usr" required th:field="*{carModel}"/>
     <label for="year">Год выпуска</label>
