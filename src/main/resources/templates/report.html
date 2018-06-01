@@ -11,6 +11,7 @@
         .tg .tg-yw40{vertical-align:top; text-align: right}
         .tg .tg-yw4l{vertical-align:top}
         .tg .tg-yw42{vertical-align:top; horiz-align: center; text-align: center}
+        .tg .width-phone{ width: 300px}
         .tg .tg-itogo{vertical-align:top; font-weight:bold; }
         .tg .tg-itogo-sum{vertical-align:top; font-weight:bold; text-align: right}
     </style>
@@ -36,7 +37,7 @@
                    <th class="tg-6xid">Объем двигателя</th>
                    <th class="tg-6xid">Год</th>
                    <th class="tg-6xid">Владелец</th>
-                   <th class="tg-6xid" width="200px">Телефон</th>
+                   <th class="tg-6xid width-phone">Телефон</th>
                </tr>
                <tr th:each="item : ${report}">
                    <td class="tg-yw42"><span  th:if="*{!item.repair.active}"><h4 class="glyphicon glyphicon-ok"></h4></span>
@@ -51,7 +52,7 @@
                    <td class="tg-yw4l" th:text="*{item.car.engineCapacity}"></td>
                    <td class="tg-yw4l" th:text="*{item.car.year}"></td>
                    <td class="tg-yw4l"><a th:href="@{/clients/owner/{id}(id=*{item.owner.id})}"><span th:text="*{item.owner.name}"/></a></td>
-                   <td class="tg-yw4l" th:text="*{item.owner.phone}"></td>
+                   <td class="tg-yw4l width-phone" th:text="*{item.owner.phone}"></td>
                </tr>
                <tfoot>
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kapion.carservice.dao.specific.OwnerRepository;
 import ru.kapion.carservice.model.Owner;
+import ru.kapion.carservice.utils.IntegerHelper;
 
 import java.util.List;
 import java.util.Random;
@@ -15,6 +16,8 @@ public class OwnerService{
     private OwnerRepository repository;
 
     public Integer save(Owner owner) {
+       //очищаем посторонние символы в номере
+       owner.setPhone(IntegerHelper.delNoDigit(owner.getPhone()));
        repository.save(owner);
        Owner savedOwner = repository.findByUniquePhone(owner.getPhone()).stream().findFirst().get();
        return savedOwner.getId();
@@ -39,7 +42,7 @@ public class OwnerService{
         newClient.setName("Виртуальный клиент");
 
         Random random = new Random();
-        newClient.setPhone("9"+random.nextInt(99999999));
+        newClient.setPhone("79"+random.nextInt(999999999));
         newClient.setNote("Клиент, добавленный вместе с первым автомобилем, данные которого требуется изменить после создания");
         return newClient;
     }

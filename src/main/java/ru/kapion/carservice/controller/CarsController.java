@@ -26,15 +26,15 @@ import java.util.Optional;
 @RequestMapping("/cars")
 public class CarsController {
 
-
-    @Autowired
     private CarService service;
-
-    @Autowired
     private OwnerService ownerService;
-
-    @Autowired
     private UserAuthDto userAuthDto;
+
+    public CarsController(CarService service, OwnerService ownerService, UserAuthDto userAuthDto) {
+        this.service = service;
+        this.ownerService = ownerService;
+        this.userAuthDto = userAuthDto;
+    }
 
     @RequestMapping
     public String carsPage(Model model) {

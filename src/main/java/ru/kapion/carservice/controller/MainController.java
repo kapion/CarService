@@ -17,11 +17,13 @@ import ru.kapion.carservice.utils.ModelHelper;
 @RequestMapping("/")
 public class MainController{
 
-    @Autowired
     private MainService service;
-
-    @Autowired
     private UserAuthDto userAuthDto;
+
+    public MainController(MainService service, UserAuthDto userAuthDto) {
+        this.service = service;
+        this.userAuthDto = userAuthDto;
+    }
 
     @RequestMapping
     public String mainPage(Model model) {

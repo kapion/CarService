@@ -26,14 +26,15 @@ import java.time.LocalTime;
 @RequestMapping("/")
 public class RepairsController  {
 
-    @Autowired
     private RepairService repService;
-
-    @Autowired
     private CarService carService;
-
-    @Autowired
     private UserAuthDto userAuthDto;
+
+    public RepairsController(RepairService repService, CarService carService, UserAuthDto userAuthDto) {
+        this.repService = repService;
+        this.carService = carService;
+        this.userAuthDto = userAuthDto;
+    }
 
     @RequestMapping(value = "repairs")
     public String repsPage(Model model) {

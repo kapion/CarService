@@ -29,11 +29,13 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/clients")
 public class OwnersController {
 
-    @Autowired
     private OwnerService service;
-
-    @Autowired
     private UserAuthDto userAuthDto;
+
+    public OwnersController(OwnerService service, UserAuthDto userAuthDto) {
+        this.service = service;
+        this.userAuthDto = userAuthDto;
+    }
 
     @RequestMapping
     public String ownersPage(Model model) {
