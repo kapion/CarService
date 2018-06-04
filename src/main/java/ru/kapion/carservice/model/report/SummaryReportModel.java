@@ -19,14 +19,5 @@ public class SummaryReportModel {
    private Repair repair;
    private Car car;
    private Owner owner;
-//   private Integer repairId;
-//   private String service;  // название ремонта
-//   private Integer carId;
-//   private String carModel; //авто
-//   private Integer ownerId;
-//   private String name;     //имя клиента
-//   private BigDecimal cost;
-//   private boolean active;
-
 
 }

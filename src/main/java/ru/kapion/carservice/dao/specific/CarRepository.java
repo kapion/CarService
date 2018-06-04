@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface CarRepository extends CommonRepository<Car, Integer> {
 
-    @Query("select c from Car c where c.regNum = ?1")
+    //@Query("select c from Car c where c.regNum = ?1")
+    //Вместо Query - волшебные выражения :)
     List<Car> findByRegNum(String regNum);
 }

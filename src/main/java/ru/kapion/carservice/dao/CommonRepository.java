@@ -12,15 +12,13 @@ import java.util.stream.StreamSupport;
 @NoRepositoryBean
 public interface CommonRepository<T,ID> extends JpaRepository<T,ID> {
 
+    //все списки в порядке убывания
+    List<T> findAllByOrderByIdDesc();
+    /*
     default List<T> getAll (){
       return this.findAll() == null ? null :
-        StreamSupport
-                .stream(
-                        Spliterators.spliteratorUnknownSize(this.findAll().iterator(), Spliterator.NONNULL),
-                        false)
+        this.findAll().stream()
                 .sorted(Collections.reverseOrder())
                 .collect(Collectors.toList());
-    }
-
-
+    }*/
 }

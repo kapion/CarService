@@ -1,6 +1,5 @@
 package ru.kapion.carservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kapion.carservice.dao.specific.OwnerRepository;
 import ru.kapion.carservice.model.Owner;
@@ -12,14 +11,22 @@ import java.util.Random;
 
 @Service
 public class OwnerService{
-    @Autowired
+
     private OwnerRepository repository;
+
+    public OwnerService(OwnerRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<Owner> getAll(){
+        return repository.findAllByOrderByIdDesc();
+    }
 
     public Integer save(Owner owner) {
        //очищаем посторонние символы в номере
        owner.setPhone(IntegerHelper.delNoDigit(owner.getPhone()));
        repository.save(owner);
-       Owner savedOwner = repository.findByUniquePhone(owner.getPhone()).stream().findFirst().get();
+       Owner savedOwner = repository.findByPhone(owner.getPhone()).stream().findFirst().get();
        return savedOwner.getId();
     }
     public void delete(Integer id) {
@@ -27,7 +34,7 @@ public class OwnerService{
     }
 
     public List<Owner> getAll(boolean isCreate) {
-        List<Owner> all = repository.getAll();
+        List<Owner> all = getAll();
         if (all != null && all.size() == 0 && isCreate) {
             all.add(createVirtual());
         }
@@ -49,7 +56,7 @@ public class OwnerService{
 
 
     public boolean isExist(Owner owner) {
-        return repository.findByUniquePhone(owner.getPhone()).size() > 0;
+        return repository.findByPhone(owner.getPhone()).size() > 0;
     }
 
 

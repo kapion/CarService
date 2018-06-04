@@ -21,23 +21,15 @@ import java.util.Optional;
 @Service
 public class ReportService {
 
-//    @Autowired
-//    private CarRepository  carRepo;
-//
-//    @Autowired
-//    private OwnerRepository  ownerRepo;
-//
-//    @Autowired
-//    private RepairRepository  repairRepo;
-
-    @Autowired
     private RepairService repairService;
+    private CarService    carService;
+    private OwnerService  ownerService;
 
-    @Autowired
-    private CarService carService;
-
-    @Autowired
-    private OwnerService ownerService;
+    public ReportService(RepairService repairService, CarService carService, OwnerService ownerService) {
+        this.repairService = repairService;
+        this.carService = carService;
+        this.ownerService = ownerService;
+    }
 
     public List<SummaryReportModel> getReport(){
         List<SummaryReportModel> reportModels = new ArrayList<>();
@@ -59,20 +51,13 @@ public class ReportService {
         Optional<Owner> ownerOp = Optional.of(ownerService.getById(ownerId));
         ownerOp.ifPresent(owner -> {
             reportModel.setOwner(owner);
-            //reportModel.setOwnerId(owner.getId());
-           // reportModel.setName(owner.getName());
             Optional<List<Car>> carsOp = Optional.ofNullable(owner.getOwnerCars());
             carsOp.ifPresent(cars -> cars.forEach(car -> {
                 reportModel.setCar(car);
-               // reportModel.setCarId(car.getId());
-               // reportModel.setCarModel(car.getCarModel());
                 Optional<List<Repair>> repairsOp = Optional.ofNullable(car.getRepairs());
                 repairsOp.ifPresent(repairs -> { repairs.forEach(repair -> {
                     reportModel.setRepair(repair);
-                      //  reportModel.setRepairId(repair.getId());
-                      //  reportModel.setService(repair.getService());
-                });
-
+                 });
                 });
             }));
         });
